@@ -1,0 +1,6 @@
+name: GetElytraDisable
+version: '${project.version}'
+main: me.gethertv.getelytradisable.GetElytraDisable
+api-version: 1.13
+commands:
+  getelytra:
