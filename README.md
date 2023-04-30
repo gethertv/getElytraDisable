@@ -8,18 +8,14 @@ Elytra po wejściu/wleceniu do strefy zostaje automatycznie ściągnięta do ekw
 Komendy/Commands: 
 
 /getelytra create <nazwa> - tworzy strefę na której jest zablokowana elytra | creates zone on which elytra is blocked
-  
 /getelytra remove <nazwa> - usuwa strefę na której jest zablokowana elytra | removes the zone on which elytra is blocked
-  
 /getelytra selector - gracz otrzymuje selector do zaznaczania regionu | player gets selector to select region
-  
 /getelytra reload - przeładowanie pluginu | reloads the plugin
 
 
 Uprawnienia/Permissions:
   
 * getelytra.admin - dostęp do komend admina | access to admin commands
-  
 * getelytra.bypass - może używać elytry w regionach | can use elytra in the regions
 
 
