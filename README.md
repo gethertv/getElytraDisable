@@ -1,6 +1,8 @@
 ![get-disableelytraMARKET](https://user-images.githubusercontent.com/49717977/235355339-21cfac85-bd78-4fc5-b7c3-16c6a341c69a.png)
 Informacje:
-Plugin pozwala na stworzenie regionu w którym zostaje zablokowane korzystanie z elytry. Elytra po wejściu/wleceniu do strefy zostaje automatycznie ściągnięta do ekwipunku.
+
+Plugin pozwala na stworzenie regionu w którym zostaje zablokowane korzystanie z elytry. 
+Elytra po wejściu/wleceniu do strefy zostaje automatycznie ściągnięta do ekwipunku.
 
 
 Komendy/Commands:
@@ -11,13 +13,11 @@ Komendy/Commands:
 
 
 Uprawnienia/Permissions:
-getelytra.admin - dostęp do komend admina | access to admin commands
-getelytra.bypass - może używać elytry w regionach | can use elytra in the regions
+* getelytra.admin - dostęp do komend admina | access to admin commands
+* getelytra.bypass - może używać elytry w regionach | can use elytra in the regions
 
 
 Przykładowa konfiguracja/Example config:
-# getelytra.admin - dostep do komend admina | access to admin commands
-# getelytra.bypass - może używać elytry w regionach | can use elytra in the regions
 regions:
   test:
     first:
