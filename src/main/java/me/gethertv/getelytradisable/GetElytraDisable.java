@@ -2,11 +2,9 @@ package me.gethertv.getelytradisable;
 
 import me.gethertv.getelytradisable.cmd.GetElytraCmd;
 import me.gethertv.getelytradisable.data.Cuboid;
-import me.gethertv.getelytradisable.data.ULicense;
 import me.gethertv.getelytradisable.listeners.ClickListener;
 import me.gethertv.getelytradisable.listeners.MoveEvent;
 import me.gethertv.getelytradisable.utils.ColorFixer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,12 +31,6 @@ public final class GetElytraDisable extends JavaPlugin {
         // Plugin startup logic
         instance = this;
         saveDefaultConfig();
-
-        if (!new ULicense(this, getConfig().getString("license.key"), "https://licencja.gether.dev/api/v1", "befd01a86bb3e5845dddd5ef3a5d46070224d4a1").verify()) {
-            Bukkit.getPluginManager().disablePlugin(this);
-            Bukkit.getScheduler().cancelTasks(this);
-            return;
-        }
 
         loadItemSelector();
         loadRegions();
