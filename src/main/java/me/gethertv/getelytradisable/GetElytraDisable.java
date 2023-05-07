@@ -2,6 +2,7 @@ package me.gethertv.getelytradisable;
 
 import me.gethertv.getelytradisable.cmd.GetElytraCmd;
 import me.gethertv.getelytradisable.data.Cuboid;
+import me.gethertv.getelytradisable.data.ElytraLevelType;
 import me.gethertv.getelytradisable.listeners.ClickListener;
 import me.gethertv.getelytradisable.listeners.MoveEvent;
 import me.gethertv.getelytradisable.utils.ColorFixer;
@@ -26,6 +27,10 @@ public final class GetElytraDisable extends JavaPlugin {
     private ItemStack selector;
     private HashMap<UUID, Location> firstData = new HashMap<>();
     private HashMap<UUID, Location> secondData = new HashMap<>();
+
+    private boolean elytraLevelUse = false;
+    private int elytraLevelHeight = 0;
+    private ElytraLevelType elytraLevelType;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -34,11 +39,12 @@ public final class GetElytraDisable extends JavaPlugin {
 
         loadItemSelector();
         loadRegions();
+        loadDisableElytraLevel();
 
         getCommand("getelytra").setExecutor(new GetElytraCmd());
         getCommand("getelytra").setTabCompleter(new GetElytraCmd());
 
-        getServer().getPluginManager().registerEvents(new MoveEvent(), this);
+        getServer().getPluginManager().registerEvents(new MoveEvent(this), this);
         getServer().getPluginManager().registerEvents(new ClickListener(), this);
 
     }
@@ -46,6 +52,14 @@ public final class GetElytraDisable extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         HandlerList.unregisterAll(this);
+    }
+
+    private void loadDisableElytraLevel()
+    {
+        elytraLevelUse = getConfig().getBoolean("elytra-level.enable");
+        elytraLevelHeight = getConfig().getInt("elytra-level.y");
+        elytraLevelType = ElytraLevelType.valueOf(getConfig().getString("elytra-level.type").toUpperCase());
+
     }
 
     private void loadItemSelector() {
@@ -95,6 +109,18 @@ public final class GetElytraDisable extends JavaPlugin {
     public void setSecond(Player player, Location location)
     {
         secondData.put(player.getUniqueId(), location);
+    }
+
+    public ElytraLevelType getElytraLevelType() {
+        return elytraLevelType;
+    }
+
+    public int getElytraLevelHeight() {
+        return elytraLevelHeight;
+    }
+
+    public boolean isElytraLevelUse() {
+        return elytraLevelUse;
     }
 
     public ItemStack getSelector() {

@@ -1,5 +1,10 @@
 # getelytra.admin - dostep do komend admina
 # getelytra.bypass - moze uzywac elytry w regionach
-license:
-  key: ''
+elytra-level:
+  # type: [ ABOVE, BELOW]
+  # disable elytra flight below or above a specified height
+  type: ABOVE
+  enable: false
+  y: 1
+
 regions: {}
