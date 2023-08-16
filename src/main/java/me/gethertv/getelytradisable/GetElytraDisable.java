@@ -1,8 +1,10 @@
 package me.gethertv.getelytradisable;
 
 import me.gethertv.getelytradisable.cmd.GetElytraCmd;
+import me.gethertv.getelytradisable.data.ArmorType;
 import me.gethertv.getelytradisable.data.Cuboid;
 import me.gethertv.getelytradisable.data.ElytraLevelType;
+import me.gethertv.getelytradisable.data.TakeOffData;
 import me.gethertv.getelytradisable.listeners.ClickListener;
 import me.gethertv.getelytradisable.listeners.MoveEvent;
 import me.gethertv.getelytradisable.utils.ColorFixer;
@@ -31,6 +33,7 @@ public final class GetElytraDisable extends JavaPlugin {
     private boolean elytraLevelUse = false;
     private int elytraLevelHeight = 0;
     private ElytraLevelType elytraLevelType;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -71,6 +74,7 @@ public final class GetElytraDisable extends JavaPlugin {
 
     public void reloadRegions()
     {
+        reloadConfig();
         elytraDisableRegion.clear();
         loadRegions();
     }
@@ -80,9 +84,69 @@ public final class GetElytraDisable extends JavaPlugin {
 
         for(String key : getConfig().getConfigurationSection("regions").getKeys(false))
         {
+            List<TakeOffData> takeOffData = new ArrayList<>();
+
+            // HELMET
+            {
+                List<Material> materials = new ArrayList<>();
+                getConfig().getStringList("regions." + key + ".take-off.helmet.material").forEach(nameMaterial -> {
+                    materials.add(Material.valueOf(nameMaterial.toUpperCase()));
+                });
+
+                takeOffData.add(new TakeOffData(
+                        getConfig().getBoolean("regions." + key + ".take-off.helmet.enable"),
+                        ArmorType.HELMET,
+                        new ArrayList<>(materials),
+                        getConfig().getString("regions." + key + ".take-off.helmet.message")
+                ));
+            }
+            // CHESTPLATE
+            {
+                List<Material> materials = new ArrayList<>();
+                getConfig().getStringList("regions." + key + ".take-off.chestplate.material").forEach(nameMaterial -> {
+                    materials.add(Material.valueOf(nameMaterial.toUpperCase()));
+                });
+
+                takeOffData.add(new TakeOffData(
+                        getConfig().getBoolean("regions." + key + ".take-off.chestplate.enable"),
+                        ArmorType.CHESTPLATE,
+                        new ArrayList<>(materials),
+                        getConfig().getString("regions." + key + ".take-off.chestplate.message")
+                ));
+            }
+            // LEGGINGS
+            {
+                List<Material> materials = new ArrayList<>();
+                getConfig().getStringList("regions." + key + ".take-off.leggings.material").forEach(nameMaterial -> {
+                    materials.add(Material.valueOf(nameMaterial.toUpperCase()));
+                });
+
+                takeOffData.add(new TakeOffData(
+                        getConfig().getBoolean("regions." + key + ".take-off.leggings.enable"),
+                        ArmorType.LEGGINGS,
+                        new ArrayList<>(materials),
+                        getConfig().getString("regions." + key + ".take-off.leggings.message")
+                ));
+            }
+            // BOOTS
+            {
+                List<Material> materials = new ArrayList<>();
+                getConfig().getStringList("regions." + key + ".take-off.boots.material").forEach(nameMaterial -> {
+                    materials.add(Material.valueOf(nameMaterial.toUpperCase()));
+                });
+
+                takeOffData.add(new TakeOffData(
+                        getConfig().getBoolean("regions." + key + ".take-off.boots.enable"),
+                        ArmorType.BOOTS,
+                        new ArrayList<>(materials),
+                        getConfig().getString("regions." + key + ".take-off.boots.message")
+                ));
+            }
+
             elytraDisableRegion.add(new Cuboid(
                     getConfig().getLocation("regions."+key+".first"),
-                    getConfig().getLocation("regions."+key+".second")
+                    getConfig().getLocation("regions."+key+".second"),
+                    takeOffData
                     ));
         }
     }

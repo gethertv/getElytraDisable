@@ -1,2 +1,8 @@
-package me.gethertv.getelytradisable.data;public class ArmorType {
+package me.gethertv.getelytradisable.data;
+
+public enum ArmorType {
+    HELMET,
+    CHESTPLATE,
+    LEGGINGS,
+    BOOTS
 }

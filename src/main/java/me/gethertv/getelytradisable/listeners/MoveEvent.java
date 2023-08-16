@@ -52,13 +52,8 @@ public class MoveEvent implements Listener {
         {
             if(cuboid.contains(player.getLocation()))
             {
-
-                if(!hasElytra(player))
-                    return;
-
-                takeoffElytra(player);
+                cuboid.checkTakeOff(player);
                 return;
-
             }
         }
     }
@@ -82,7 +77,7 @@ public class MoveEvent implements Listener {
         return false;
     }
 
-    public boolean isInventoryFull(Player p)
+    public static boolean isInventoryFull(Player p)
     {
         return p.getInventory().firstEmpty() == -1;
     }

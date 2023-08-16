@@ -2,6 +2,7 @@ package me.gethertv.getelytradisable.cmd;
 
 import me.gethertv.getelytradisable.GetElytraDisable;
 import me.gethertv.getelytradisable.data.Cuboid;
+import me.gethertv.getelytradisable.data.TakeOffData;
 import me.gethertv.getelytradisable.utils.ColorFixer;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -57,9 +58,21 @@ public class GetElytraCmd implements CommandExecutor, TabCompleter {
                 FileConfiguration config = GetElytraDisable.getInstance().getConfig();
                 config.set("regions."+name+".first", first);
                 config.set("regions."+name+".second", second);
+                config.set("regions."+name+".take-off.helmet.enable", false);
+                config.set("regions."+name+".take-off.helmet.material", new ArrayList<>());
+                config.set("regions."+name+".take-off.helmet.message", "&cNie mozesz tego tutaj uzywac!");
+                config.set("regions."+name+".take-off.chestplate.enable", false);
+                config.set("regions."+name+".take-off.chestplate.material", new ArrayList<>());
+                config.set("regions."+name+".take-off.chestplate.message", "&cNie mozesz tego tutaj uzywac!");
+                config.set("regions."+name+".take-off.leggings.enable", false);
+                config.set("regions."+name+".take-off.leggings.material", new ArrayList<>());
+                config.set("regions."+name+".take-off.leggings.message", "&cNie mozesz tego tutaj uzywac!");
+                config.set("regions."+name+".take-off.boots.enable", false);
+                config.set("regions."+name+".take-off.boots.material", new ArrayList<>());
+                config.set("regions."+name+".take-off.boots.message", "&cNie mozesz tego tutaj uzywac!");
+
                 GetElytraDisable.getInstance().saveConfig();
-                GetElytraDisable.getInstance().getElytraDisableRegion().add(new Cuboid(first, second));
-                player.sendMessage(ColorFixer.addColors("&aPomyslnie stworzono region!"));
+                player.sendMessage(ColorFixer.addColors("&aPomyslnie stworzono region! Ustaw w configu przedmioty oraz wpisz /getelytra reload"));
                 return true;
             }
             if(args[0].equalsIgnoreCase("remove"))

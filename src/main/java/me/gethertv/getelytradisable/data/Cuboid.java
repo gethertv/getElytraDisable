@@ -1,7 +1,14 @@
 package me.gethertv.getelytradisable.data;
+import me.gethertv.getelytradisable.listeners.MoveEvent;
+import me.gethertv.getelytradisable.utils.ColorFixer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class Cuboid {
 
@@ -16,10 +23,13 @@ public class Cuboid {
     private Location first;
     private Location second;
 
-    public Cuboid(Location loc1, Location loc2) {
+    private List<TakeOffData> takeOffData;
+
+    public Cuboid(Location loc1, Location loc2, List<TakeOffData> takeOffData) {
         this(loc1.getWorld(), loc1.getBlockX(), loc1.getBlockY(), loc1.getBlockZ(), loc2.getBlockX(), loc2.getBlockY(), loc2.getBlockZ());
         this.first = loc1;
         this.second = loc2;
+        this.takeOffData = takeOffData;
     }
 
     public Cuboid(World world, int x1, int y1, int z1, int x2, int y2, int z2) {
@@ -33,6 +43,82 @@ public class Cuboid {
         maxZ = Math.max(z1, z2);
     }
 
+    public void checkTakeOff(Player player)
+    {
+        for(TakeOffData data : takeOffData)
+        {
+            if(!data.isEnable())
+                continue;
+
+            boolean any = false;
+            for(Material material : data.getMaterials())
+            {
+                if(hasMaterial(player, data.getType(), material))
+                {
+                    takeOffItem(player, data.getType());
+                    any = true;
+                }
+            }
+            if(any)
+                if(!data.getMessage().equals("NONE"))
+                    player.sendMessage(ColorFixer.addColors(data.getMessage()));
+        }
+    }
+
+    public void takeOffItem(Player player, ArmorType type)
+    {
+        ItemStack itemStack = null;
+        if(type==ArmorType.HELMET)
+        {
+            itemStack = player.getInventory().getHelmet();
+            player.getInventory().setHelmet(null);
+        }
+        if(type==ArmorType.CHESTPLATE)
+        {
+            itemStack = player.getInventory().getChestplate();
+            player.getInventory().setChestplate(null);
+        }
+        if(type==ArmorType.LEGGINGS)
+        {
+            itemStack = player.getInventory().getLeggings();
+            player.getInventory().setLeggings(null);
+        }
+        if(type==ArmorType.BOOTS)
+        {
+            itemStack = player.getInventory().getBoots();
+            player.getInventory().setBoots(null);
+        }
+
+        if(itemStack!=null)
+        {
+            if(MoveEvent.isInventoryFull(player))
+                player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+            else
+                player.getInventory().addItem(itemStack);
+        }
+
+    }
+
+    public boolean hasMaterial(Player player, ArmorType armorType, Material material)
+    {
+        ItemStack itemStack = null;
+        if(armorType==ArmorType.HELMET)
+            itemStack = player.getInventory().getHelmet();
+
+        if(armorType==ArmorType.CHESTPLATE)
+            itemStack = player.getInventory().getChestplate();
+
+        if(armorType==ArmorType.LEGGINGS)
+            itemStack = player.getInventory().getLeggings();
+
+        if(armorType==ArmorType.BOOTS)
+            itemStack = player.getInventory().getBoots();
+
+        if(itemStack!=null && itemStack.getType()==material)
+            return true;
+
+        return false;
+    }
     public void clearCuboid()
     {
         for (int x = minX; x <= maxX; x++) {
@@ -125,6 +211,10 @@ public class Cuboid {
                 ", maxX:" + maxX +
                 ", maxY:" + maxY +
                 ", maxZ:" + maxZ + "]";
+    }
+
+    public List<TakeOffData> getTakeOffData() {
+        return takeOffData;
     }
 
     public Location getSecond() {

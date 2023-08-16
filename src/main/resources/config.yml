@@ -7,4 +7,30 @@ elytra-level:
   enable: false
   y: 1
 
+#take-off:
+#  helmet:
+#    enable: false
+#    message: "NONE"
+#    material:
+#      - "DIAMOND_HELMET"
+#      - "IRON_HELMET"
+#  chestplate:
+#    enable: false
+#    message: "&cNie mozesz tego tutaj uzywac!"
+#    material:
+#      - "DIAMOND_CHESTPLATE"
+#      - "IRON_CHESTPLATE"
+#  leggings:
+#    enable: false
+#    message: "NONE"
+#    material:
+#      - "DIAMOND_LEGGINGS"
+#      - "IRON_LEGGINGS"
+#  boots:
+#    enable: false
+#    message: "&cNie mozesz tego tutaj uzywac!"
+#    material:
+#      - "DIAMOND_BOOTS"
+#      - "IRON_BOOTS"
+
 regions: {}
